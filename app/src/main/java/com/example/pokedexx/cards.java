@@ -2,15 +2,29 @@ package com.example.pokedexx;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public class cards {
     String name;
 
-    @SerializedName("sprites")
-    String pictureUrl;
+    items sprites;
 
-    public cards(String name, String picture) {
+    public items getSprites() {
+        return sprites;
+    }
+
+    public void setSprites(items sprites) {
+        this.sprites = sprites;
+    }
+
+
+
+
+    public cards(String name, items picture) {
         this.name = name;
-        this.pictureUrl = picture;
+        sprites= picture;
     }
 
     public String getName() {
@@ -22,10 +36,10 @@ public class cards {
     }
 
     public String getPicture() {
-        return pictureUrl;
+        return sprites.back_default;
     }
 
     public void setPicture(String picture) {
-        this.pictureUrl = picture;
+        this.sprites.back_default = picture;
     }
 }

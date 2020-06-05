@@ -39,20 +39,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.o
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRecyclerView=findViewById(R.id.recyclerView);
-
-//        PokeApi pokeApi = new PokeApiClient();
-//        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//
-//        StrictMode.setThreadPolicy(policy);
+        getValues();
         initRecyclerView();
-//        for(int k=1;k<40;k++){
-           // PokemonForm aur = pokeApi.getPokemonForm(k);
-           // String pokemon=pokeApi.getPokemon(k).getName();
-           // String st = aur.getSprites().getBackShiny();
-//            cards cards = new cards("viv", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/12.png");
-//            mCards.add(cards);
-           // mRecyclerAdapter.notifyDataSetChanged();
-        //}
 
     }
     void initRecyclerView(){
@@ -66,24 +54,27 @@ public class MainActivity extends AppCompatActivity implements RecyclerAdapter.o
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         pokeRet dummyapi;
-        dummyapi = retrofit.create(com.example.pokedexx.pokeRet.class);
-        Call<cards> calls=dummyapi.getCards();
-        calls.enqueue(new Callback<cards>() {
-            @Override
-            public void onResponse(Call<cards> call, Response<cards> response) {
-                if(!response.isSuccessful()){
-                    return;
+        for (int k=1;k<100;k++) {
+            dummyapi = retrofit.create(com.example.pokedexx.pokeRet.class);
+            Call<cards> calls = dummyapi.getCards(k);
+            calls.enqueue(new Callback<cards>() {
+                @Override
+                public void onResponse(Call<cards> call, Response<cards> response) {
+                    if (!response.isSuccessful()) {
+                        return;
+                    }
+                    cards cards = response.body();
+                    cards cardsNew = new cards(cards.name, cards.sprites);
+                    mCards.add(cards);
+                    mRecyclerAdapter.notifyDataSetChanged();
                 }
-                cards cards= response.body();
-                Log.e(TAG, "onResponse: dsfsdfs",null );
-                Log.d(TAG, "onResponse: "+cards.name+"cards.pictureUrl");
-            }
 
-            @Override
-            public void onFailure(Call<cards> call, Throwable t) {
-
-            }
-        });
+                @Override
+                public void onFailure(Call<cards> call, Throwable t) {
+                    Log.d(TAG, "onFailure: ");
+                }
+            });
+        }
     }
 
 
