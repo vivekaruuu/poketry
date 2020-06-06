@@ -1,88 +1,86 @@
 package com.example.pokedexx;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import me.sargunvohra.lib.pokekotlin.client.PokeApi;
-import me.sargunvohra.lib.pokekotlin.client.PokeApiClient;
-import me.sargunvohra.lib.pokekotlin.model.Pokemon;
-import me.sargunvohra.lib.pokekotlin.model.PokemonForm;
-import me.sargunvohra.lib.pokekotlin.model.PokemonFormSprites;
-import me.sargunvohra.lib.pokekotlin.model.PokemonSpecies;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity implements RecyclerAdapter.onCardListener {
 
-    RecyclerAdapter mRecyclerAdapter;
-    RecyclerView mRecyclerView;
-    ArrayList<cards> mCards=new ArrayList<>();
+public class MainActivity extends AppCompatActivity   {
+
+
+
     private static final String TAG = "MainActivity";
+    private DrawerLayout drawerLayout;
+    private ViewPager mViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        mRecyclerView=findViewById(R.id.recyclerView);
-        getValues();
-        initRecyclerView();
+        setContentView(R.layout.activity_main_actual);
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-    }
-    void initRecyclerView(){
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,3));
-        mRecyclerAdapter=new RecyclerAdapter(mCards,this);
-        mRecyclerView.setAdapter(mRecyclerAdapter);
-    }
-    void getValues(){
-        Retrofit retrofit=new Retrofit.Builder()
-                .baseUrl("https://pokeapi.co/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        pokeRet dummyapi;
-        for (int k=1;k<100;k++) {
-            dummyapi = retrofit.create(com.example.pokedexx.pokeRet.class);
-            Call<cards> calls = dummyapi.getCards(k);
-            calls.enqueue(new Callback<cards>() {
-                @Override
-                public void onResponse(Call<cards> call, Response<cards> response) {
-                    if (!response.isSuccessful()) {
-                        return;
-                    }
-                    cards cards = response.body();
-                    cards cardsNew = new cards(cards.name, cards.sprites);
-                    mCards.add(cards);
-                    mRecyclerAdapter.notifyDataSetChanged();
-                }
+        mViewPager=findViewById(R.id.fragmentContainer);
+        setUpViewPager(mViewPager);
+        NavigationView navigationView=findViewById(R.id.navView);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                //setViewPage();
+               // getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new RecyclerFragment()).commit();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
 
-                @Override
-                public void onFailure(Call<cards> call, Throwable t) {
-                    Log.d(TAG, "onFailure: ");
-                }
-            });
-        }
+            }
+        });
+
+        drawerLayout=findViewById(R.id.drawerLayout);
+        ActionBarDrawerToggle actionBarDrawerToggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+    }
+
+    private void setUpViewPager(ViewPager viewPager){
+        FragmentAdapter adapter=new FragmentAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        adapter.addFragment(new RecyclerFragment(),"RecyclerView");
+        viewPager.setAdapter(adapter);
+    }
+    public void setViewPage(int FragmentNumber){
+        mViewPager.setCurrentItem(FragmentNumber);
     }
 
 
-
-
-    @Override
-    public void onNoteClick(int position) {
-        Log.i("index",String.valueOf(position));
-
-    }
 }
+
+

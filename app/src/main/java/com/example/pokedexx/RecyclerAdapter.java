@@ -1,5 +1,6 @@
 package com.example.pokedexx;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,12 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolders> {
 
     private ArrayList<cards> mCards=new ArrayList<>();
+    private static final String TAG = "RecyclerAdapter";
     private onCardListener onCardListener;
     public RecyclerAdapter(ArrayList<cards> mNotes,onCardListener onCardListener) {
         this.mCards = mNotes;
         this.onCardListener= onCardListener;
     }
-
     @NonNull
     @Override
     public ViewHolders onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
