@@ -1,6 +1,5 @@
 package com.example.pokedexx;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolders> {
+public class RecyclerAdapterItem extends RecyclerView.Adapter<RecyclerAdapterItem.ViewHolders> {
 
-    private ArrayList<cards> mCards=new ArrayList<>();
+    private ArrayList<item> mCards=new ArrayList<>();
     private static final String TAG = "RecyclerAdapter";
     private onCardListener onCardListener;
 
-    public RecyclerAdapter(ArrayList<cards> mNotes,onCardListener onCardListener) {
+    public RecyclerAdapterItem(ArrayList<item> mNotes, onCardListener onCardListener) {
         this.mCards = mNotes;
         this.onCardListener= onCardListener;
     }
@@ -30,7 +29,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public ViewHolders onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item,parent,false);
 
         return new ViewHolders(view,this.onCardListener);
     }

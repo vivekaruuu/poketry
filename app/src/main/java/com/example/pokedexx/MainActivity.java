@@ -57,7 +57,10 @@ public class MainActivity extends AppCompatActivity   {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                //setViewPage();
+                switch (item.getItemId()) {
+                    case R.id.locationList:setViewPage(1); Log.d(TAG, "onNavigationItemSelected: 1");;break;
+                    case R.id.itemsList:setViewPage(0); Log.d(TAG, "onNavigationItemSelected: 2");;break;
+                }
                // getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new RecyclerFragment()).commit();
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity   {
     private void setUpViewPager(ViewPager viewPager){
         FragmentAdapter adapter=new FragmentAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(new RecyclerFragment(),"RecyclerView");
+        adapter.addFragment(new LocationFragment(),"itemFragment");
         viewPager.setAdapter(adapter);
     }
     public void setViewPage(int FragmentNumber){
