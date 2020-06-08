@@ -4,9 +4,15 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-            <item android:id="@+id/itemsList"
-                    android:title="items"/>
-            <item android:id="@+id/locationList"
-                android:title="locations"/>
+        <item android:id="@+id/pokemonList"
+            android:title="pokemon"/>
+        <item android:id="@+id/itemsList"
+            android:title="items"/>
+        <item android:id="@+id/locationList"
+            android:title="locations"/>
+        <item android:id="@+id/regionList"
+            android:title="regions"/>
+        <item android:id="@+id/typeList"
+            android:title="types"/>
     </group>
 </menu>

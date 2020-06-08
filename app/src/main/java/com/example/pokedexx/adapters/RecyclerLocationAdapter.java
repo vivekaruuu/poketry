@@ -1,26 +1,25 @@
-package com.example.pokedexx;
+package com.example.pokedexx.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import com.example.pokedexx.R;
 
 import java.util.ArrayList;
 
-public class RecyclerAdapterItem extends RecyclerView.Adapter<RecyclerAdapterItem.ViewHolders> {
+public class RecyclerLocationAdapter extends RecyclerView.Adapter<RecyclerLocationAdapter.ViewHolders> {
 
-    private ArrayList<item> mCards=new ArrayList<>();
+    private ArrayList<String> mLocations=new ArrayList<>();
     private static final String TAG = "RecyclerAdapter";
     private onCardListener onCardListener;
 
-    public RecyclerAdapterItem(ArrayList<item> mNotes, onCardListener onCardListener) {
-        this.mCards = mNotes;
+    public RecyclerLocationAdapter(ArrayList<String> mNotes, onCardListener onCardListener) {
+        this.mLocations = mNotes;
         this.onCardListener= onCardListener;
     }
 
@@ -29,33 +28,29 @@ public class RecyclerAdapterItem extends RecyclerView.Adapter<RecyclerAdapterIte
     @Override
     public ViewHolders onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item,parent,false);
+        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.location,parent,false);
 
         return new ViewHolders(view,this.onCardListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolders holder, int position) {
-        holder.name.setText(mCards.get(position).getName());
-        String imageUrl=mCards.get(position).getPicture();
-        Picasso.get().load(imageUrl).fit().centerInside().into(holder.imageView);
+        holder.name.setText(mLocations.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return mCards.size();
+        return mLocations.size();
     }
 
     public class ViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView name;
-        private ImageView imageView;
         onCardListener onCardListener;
         public ViewHolders(@NonNull View itemView,onCardListener onCardListener) {
             super(itemView);
-            name=itemView.findViewById(R.id.PokeName);
-            imageView=itemView.findViewById(R.id.PokeImage);
+            name=itemView.findViewById(R.id.name);
             this.onCardListener=onCardListener;
             itemView.setOnClickListener(this);
         }

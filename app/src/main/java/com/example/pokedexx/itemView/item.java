@@ -1,4 +1,4 @@
-package com.example.pokedexx;
+package com.example.pokedexx.itemView;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,4 +1,6 @@
-package com.example.pokedexx;
+package com.example.pokedexx.pokemonView;
+
+import com.example.pokedexx.pokemonView.cards;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

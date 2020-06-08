@@ -1,4 +1,4 @@
-package com.example.pokedexx;
+package com.example.pokedexx.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

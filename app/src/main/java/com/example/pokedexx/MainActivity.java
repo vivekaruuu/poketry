@@ -6,35 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.StrictMode;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.example.pokedexx.adapters.FragmentAdapter;
+import com.example.pokedexx.itemView.ItemFragment;
+import com.example.pokedexx.locationView.LocationFragment;
+import com.example.pokedexx.pokemonView.RecyclerFragment;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MainActivity extends AppCompatActivity   {
@@ -58,8 +40,9 @@ public class MainActivity extends AppCompatActivity   {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.locationList:setViewPage(1); Log.d(TAG, "onNavigationItemSelected: 1");;break;
-                    case R.id.itemsList:setViewPage(0); Log.d(TAG, "onNavigationItemSelected: 2");;break;
+                    case R.id.pokemonList:setViewPage(0); break;
+                    case R.id.itemsList:setViewPage(1); break;
+                    case R.id.locationList:setViewPage(2);break;
                 }
                // getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new RecyclerFragment()).commit();
                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -77,7 +60,8 @@ public class MainActivity extends AppCompatActivity   {
     private void setUpViewPager(ViewPager viewPager){
         FragmentAdapter adapter=new FragmentAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(new RecyclerFragment(),"RecyclerView");
-        adapter.addFragment(new LocationFragment(),"itemFragment");
+        adapter.addFragment(new ItemFragment(),"itemFragment");
+        adapter.addFragment(new LocationFragment(),"locationFragment");
         viewPager.setAdapter(adapter);
     }
     public void setViewPage(int FragmentNumber){

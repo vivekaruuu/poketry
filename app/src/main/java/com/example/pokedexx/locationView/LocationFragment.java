@@ -1,17 +1,18 @@
-package com.example.pokedexx;
+package com.example.pokedexx.locationView;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.pokedexx.R;
+import com.example.pokedexx.adapters.RecyclerLocationAdapter;
 
 import java.util.ArrayList;
 
@@ -19,10 +20,11 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LocationFragment extends Fragment implements RecyclerLocationAdapter.onCardListener{
+public class LocationFragment extends Fragment implements RecyclerLocationAdapter.onCardListener {
     static RecyclerLocationAdapter mRecyclerAdapter;
     static RecyclerView mRecyclerView;
     static ArrayList<String> mlocations=new ArrayList<>();
+    private static final String TAG = "LocationFragment";
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,8 +51,15 @@ public class LocationFragment extends Fragment implements RecyclerLocationAdapte
                 locatRet dummyapi;
 
                     dummyapi = retrofit.create(locatRet.class);
+                   // Call<ResponseBody> responseBodyCall=dummyapi.getloc();
                     Call<locations> calls = dummyapi.getLocation();
                     try {
+//                        ResponseBody responseBody=responseBodyCall.execute().body();
+//                        JSONObject jsonArray=new JSONObject(responseBody.string());
+//                        for(int k=0;k<10;k++) {
+//                            String string = jsonArray.getJSONArray("results").getJSONObject(k).getString("name");
+//                            Log.d(TAG, "run: "+string);
+//                        }
                         locations cards = calls.execute().body();
                         for(locations.Result r:cards.getResults()){
                             mlocations.add(r.getName());
