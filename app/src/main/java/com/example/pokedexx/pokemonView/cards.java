@@ -1,5 +1,8 @@
 package com.example.pokedexx.pokemonView;
 
+import android.graphics.Bitmap;
+import android.media.Image;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.lang.reflect.Array;
@@ -7,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class cards {
-    String name;
+     String name;
 
-    items sprites;
+     items sprites;
 
-    
+    public Bitmap bitmap;
 
     public items getSprites() {
         return sprites;
@@ -24,7 +27,8 @@ public class cards {
 
 
 
-    public cards(String name, items picture) {
+    public cards(String name, items picture,Bitmap bitmap) {
+        this.bitmap=bitmap;
         this.name = name;
         sprites= picture;
     }
@@ -37,7 +41,7 @@ public class cards {
         this.name = name;
     }
 
-    public String getPicture() {
+    public  String getPicture() {
         return sprites.back_default;
     }
 
@@ -45,6 +49,9 @@ public class cards {
         this.sprites.back_default = picture;
     }
     public class items{
+
+
+        @SerializedName("front_default")
         String back_default;
 
         public String getBack_default() {

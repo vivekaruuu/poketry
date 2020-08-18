@@ -30,6 +30,7 @@ public class ItemFragment extends Fragment implements RecyclerAdapterItem.onCard
         View view=inflater.inflate(R.layout.item_view, container, false);
         mRecyclerView=view.findViewById(R.id.recyclerViewItem);
         initRecyclerView();
+        if(mItems.isEmpty())
         getValues();
         return view;
     }
@@ -63,12 +64,14 @@ public class ItemFragment extends Fragment implements RecyclerAdapterItem.onCard
                         item cards = calls.execute().body();
                         item cardsNew = new item(cards.name, cards.sprites);
                         mItems.add(cardsNew);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mRecyclerAdapter.notifyDataSetChanged();
-                            }
-                        });
+                        if(getActivity()!=null) {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mRecyclerAdapter.notifyDataSetChanged();
+                                }
+                            });
+                        }
 
 
                     } catch (Exception e) {

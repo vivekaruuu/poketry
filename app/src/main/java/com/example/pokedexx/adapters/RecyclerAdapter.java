@@ -1,5 +1,6 @@
 package com.example.pokedexx.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,13 @@ import com.example.pokedexx.pokemonView.cards;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolders> {
 
     private ArrayList<cards> mCards=new ArrayList<>();
+//    HashMap<Integer,cards> mCards
+//            = new HashMap<>();
     private static final String TAG = "RecyclerAdapter";
     private onCardListener onCardListener;
 
@@ -38,9 +42,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolders holder, int position) {
-        holder.name.setText(mCards.get(position).getName());
-        String imageUrl=mCards.get(position).getPicture();
-        Picasso.get().load(imageUrl).fit().centerInside().into(holder.imageView);
+
+        if(mCards.get(position)!=null)
+        {
+            holder.name.setText(mCards.get(position).getName());
+            String imageUrl=mCards.get(position).getPicture();
+            Picasso.get().load(imageUrl).fit().centerInside().into(holder.imageView);
+//            holder.imageView.setImageBitmap(mCards.get(position).bitmap);
+        }
+        //Picasso.get().load(imageUrl).fit().centerInside().into(holder.imageView);
 
     }
 

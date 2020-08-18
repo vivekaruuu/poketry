@@ -1,5 +1,7 @@
 package com.example.pokedexx.adapters;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,7 +12,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentAdapter extends FragmentPagerAdapter {
+public class FragmentAdapter extends FragmentStatePagerAdapter {
+    private static final String TAG = "FragmentAdapter";
 
     private final List<Fragment> mFragmentList=new ArrayList<>();
     private final List<String> mFragmentTitleList=new ArrayList<>();
@@ -22,6 +25,13 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         mFragmentTitleList.add(title);
 
     }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+
+        return POSITION_NONE;
+    }
+
     @NonNull
     @Override
     public Fragment getItem(int position) {
